@@ -1,1 +1,217 @@
+let reciever = props.reciever || "near.social";
+
+initState({ amount: 0.01, reciever });
+
+const donate = () => {
+  Near.call(
+    state.reciever,
+    "donate",
+    {},
+    "30000000000000",
+    state.amount * 1e24
+  );
+};
+const onChangeAmount = (amount) => {
+  State.update({
+    amount,
+  });
+};
+const onChangeReciever = (reciever) => {
+  State.update({
+    reciever,
+  });
+};
+
+const HeaderContainer = styled.div`
+  height: 70px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 8px;
+`;
+
+const Nav = styled.div`
+  height: 60px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+
+  a {
+    color: #000000;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 8px;
+    cursor: pointer;
+
+    &:hover {
+      border-bottom: 2px solid #000;
+    }
+  }
+`;
+
+const SectionContainer = styled.div`
+  padding: 20px;
+`;
+
+const header = (
+  <HeaderContainer>
+    <h4 style={{ fontWeight: 700 }}>Apprende Drop</h4>
+
+    <Nav>
+      <a href="#" onClick={() => handleNavigation("home")}>
+        Home
+      </a>
+      <a href="#" onClick={() => handleNavigation("device-status")}>
+        Test de NEAR
+      </a>
+    </Nav>
+  </HeaderContainer>
+);
+
+const smallImageStyle = {
+  maxHeight: 200,
+  width: "50%",
+  objectFit: "cover",
+  margin: "auto",
+};
+
+const homePageContent = (
+  <SectionContainer>
+    <h2>NEAR Overview</h2>
+
+    <div>
+      <img
+        style={smallImageStyle}
+        src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1099&q=80"
+        alt="SNMP Devices"
+      />
+
+      <h3>What is NEAR?</h3>
+      <p>
+        NEAR Protocol is a blockchain platform designed to facilitate the
+        development and deployment of decentralized applications (dApps). It
+        stands out for its focus on developer accessibility, offering a
+        user-friendly interface and tools that simplify the process of creating
+        smart contracts. Its sharding architecture improves scalability by
+        dividing the network into smaller shards, enabling higher performance.
+        NEAR aims to provide fast and cost-effective transactions, making it an
+        attractive choice for those looking to build decentralized solutions
+        that are efficient in terms of both cost and speed.
+      </p>
+
+      <h3>Near Functions</h3>
+      <p>
+        <ul>
+          <li>
+            <strong>Sharding Integration:</strong> NEAR utilizes sharding for
+            improved scalability.
+          </li>
+          <li>
+            <strong>Developer Accessibility:</strong> NEAR focuses on making
+            DApp development more accessible.
+          </li>
+          <li>
+            <strong>Efficient Smart Contracts:</strong> NEAR aims for
+            cost-effective and fast smart contract execution.
+          </li>
+          <li>
+            <strong>Unique Usernames:</strong> NEAR allows unique usernames for
+            user-friendly interactions.
+          </li>
+        </ul>
+      </p>
+
+      <h3>Protocol Founders</h3>
+      <p>
+        <ul>
+          <li>
+            <strong>Illia Polosukhin:</strong> Co-founder of NEAR Protocol.
+          </li>
+          <li>
+            <strong>Alex Skidanov:</strong> Co-founder of NEAR Protocol.
+          </li>
+        </ul>
+      </p>
+      {/* Agrega más ejemplos según sea necesario */}
+    </div>
+  </SectionContainer>
+);
+
+const snmpSection = (
+  <SectionContainer>
+    <h2>Cuestionario de NEAR</h2>
+
+    <div>
+      {content}
+      <h3>Pregunta 1</h3>
+      <p> ¿Near es una Blockchain? </p>
+      <p>
+        Espacio para la respuesta
+        <label htmlFor="contact">Enter your message:</label>
+        <input type="text" id="contact" name="contact" />
+      </p>
+      {/* Agrega más detalles según la información que desees mostrar */}
+    </div>
+
+    <div>
+      {content}
+      <h3>Pregunta 2</h3>
+      <p>Escriba otra pregunta... 3</p>
+      <p> Escriba aquí su respuesta. </p>
+      {/* Agrega más detalles según la configuración de SNMP */}
+      <div>
+        <h4> Donors Address</h4>
+        <input
+          placeholder={state.reciever}
+          onChange={(e) => onChangeReciever(e.target.value)}
+        />
+        <h4> Amount in NEAR </h4>
+        <input
+          type="number"
+          placeholder={state.amount}
+          onChange={(e) => onChangeAmount(e.target.value)}
+        />
+        <button
+          disabled={context.loading}
+          onClick={donate}
+          className={`btn ${
+            context.loading ? "btn-outline-dark" : "btn-primary"
+          }`}
+        >
+          Donate {state.amount} NEAR to {state.reciever}
+        </button>
+      </div>
+    </div>
+  </SectionContainer>
+);
+
+// Resto del código...
+
+// Función para manejar la navegación
+const handleNavigation = (section) => {
+  if (section === "home") {
+    // Muestra la página de inicio
+    setPageContent(homePageContent);
+  } else {
+    // Muestra otras secciones según sea necesario
+    setPageContent(snmpSection); // Puedes cambiar esto según la sección actual
+  }
+};
+
+// Estado para almacenar el contenido de la página actual
+const [pageContent, setPageContent] = useState(snmpSection);
+
+// Resto del código...
+
+return (
+  <div>
+    {header}
+    {pageContent}
+    {/* ... Otro contenido de la página ... */}
+  </div>
+);
 
