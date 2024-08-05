@@ -1,3 +1,4 @@
+
 let reciever = props.reciever || "near.social";
 
 initState({ amount: 0.01, reciever });
